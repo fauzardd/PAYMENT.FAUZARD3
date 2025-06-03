@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fauzard Payment - Payment Methode</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --qris-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            --neon-blue: #00d4ff;
+            --neon-purple: #b537f2;
+            --neon-pink: #ff006e;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.85);
+            --text-muted: rgba(255, 255, 255, 0.65);
+            --shadow-light: 0 8px 32px rgba(31, 38, 135, 0.37);
+            --shadow-heavy: 0 20px 60px rgba(0, 0, 0, 0.4);
+            --shadow-neon: 0 0 30px rgba(0, 212, 255, 0.5);
+            --border-radius: 24px;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --bg-image: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5));
+        }
+
+        [data-theme="light"] {
+            --primary-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            --secondary-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            --accent-gradient: linear-gradient(135deg, #0093E9 0%, #80D0C7 100%);
+            --success-gradient: linear-gradient(135deg, #0ba360 0%, #3cba92 100%);
+            --qris-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --neon-blue: #0093E9;
+            --neon-purple: #6a11cb;
+            --neon-pink: #fa709a;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --text-primary: #1a202c;
+            --text-secondary: rgba(26, 32, 44, 0.85);
+            --text-muted: rgba(26, 32, 44, 0.65);
+            --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow-heavy: 0 20px 60px rgba(0, 0, 0, 0.15);
+            --shadow-neon: 0 0 30px rgba(0, 147, 233, 0.3);
+            --bg-image: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-image), url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_20250603_190927_060.jpg-Yv1ryg0nf304xd7ar2AZZP4hUqp33f.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            transition: background 0.5s ease;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 100px;
+            background: var(--accent-gradient);
+            border-radius: 25px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-neon);
+            animation: logoFloat 4s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: logoSpin 3s linear infinite;
+        }
+
+        .logo-container i {
+            font-size: 3rem;
+            color: white;
+            z-index: 1;
+            position: relative;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        @keyframes logoSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, #a8edea 30%, #fed6e3 60%, #d299c2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            animation: textGlow 3s ease-in-out infinite alternate;
+        }
+
+        [data-theme="light"] .header h1 {
+            background: linear-gradient(135deg, #1a202c 0%, #2a4365 30%, #553c9a 60%, #702459 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes textGlow {
+            0% { filter: brightness(1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); }
+            100% { filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.6)); }
+        }
+
+        .header .subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .header .description {
+            font-size: clamp(0.875rem, 2vw, 1.1rem);
+            color: var(--text-muted);
+            font-weight: 400;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .theme-toggle i {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .theme-toggle span {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+
+        .payment-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 40px 32px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            animation: slideInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+        }
+
+        .payment-card:nth-child(1) { animation-delay: 0.1s; }
+        .payment-card:nth-child(2) { animation-delay: 0.2s; }
+        .payment-card:nth-child(3) { animation-delay: 0.3s; }
+        .payment-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .payment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .payment-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--accent-gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: var(--shadow-heavy), 0 0 40px rgba(79, 172, 254, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .payment-card:hover::before {
+            left: 100%;
+        }
+
+        .payment-card:hover::after {
+            opacity: 0.08;
+        }
+
+        .qris-card {
+            grid-column: 1 / -1;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 154, 158, 0.1), rgba(254, 207, 239, 0.1));
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+        }
+
+        .qris-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple), var(--neon-pink), var(--neon-blue));
+            background-size: 400% 400%;
+            border-radius: var(--border-radius);
+            padding: 2px;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            animation: borderGlow 4s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .qris-container {
+            position: relative;
+            display: inline-block;
+            margin: 32px 0 40px;
+            perspective: 1000px;
+        }
+
+        .qris-wrapper {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+        }
+
+        .qris-card:hover .qris-wrapper {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+
+        .qris-image {
+            width: 280px;
+            height: 280px;
+            border-radius: 25px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 
+                0 25px 80px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .qris-image::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple), var(--neon-pink), var(--neon-blue));
+            background-size: 400% 400%;
+            border-radius: 28px;
+            z-index: -1;
+            animation: qrisGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes qrisGlow {
+            0%, 100% { 
+                background-position: 0% 50%;
+                filter: blur(8px);
+                opacity: 0.8;
+            }
+            50% { 
+                background-position: 100% 50%;
+                filter: blur(12px);
+                opacity: 1;
+            }
+        }
+
+        .qris-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%, rgba(255, 255, 255, 0.05) 100%);
+            border-radius: 25px;
+            pointer-events: none;
+        }
+
+        .qris-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 25px;
+            transition: var(--transition);
+        }
+
+        .qris-card:hover .qris-image {
+            transform: scale(1.05);
+            box-shadow: 
+                0 35px 100px rgba(0, 0, 0, 0.5),
+                0 0 60px rgba(79, 172, 254, 0.4);
+        }
+
+        .qris-overlay {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background: var(--success-gradient);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            animation: pulseGlow 2s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(56, 239, 125, 0.5);
+            }
+            50% { 
+                transform: scale(1.1);
+                box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 0 0 30px rgba(56, 239, 125, 0.8);
+            }
+        }
+
+        .qris-scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+            animation: scanLine 2s ease-in-out infinite;
+            border-radius: 2px;
+        }
+
+        @keyframes scanLine {
+            0% { transform: translateY(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(280px); opacity: 0; }
+        }
+
+        .qris-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: 25px;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            animation: floatParticle 4s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { left: 20%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 40%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 60%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 80%; animation-delay: 3s; }
+
+        @keyframes floatParticle {
+            0%, 100% { 
+                transform: translateY(100%) scale(0);
+                opacity: 0;
+            }
+            50% { 
+                transform: translateY(-20px) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .payment-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+
+        .payment-icon-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            background: var(--accent-gradient);
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-icon-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: iconSpin 4s linear infinite;
+        }
+
+        .payment-card:hover .payment-icon-wrapper {
+            transform: scale(1.15) rotate(10deg);
+            box-shadow: 0 15px 40px rgba(79, 172, 254, 0.6);
+        }
+
+        @keyframes iconSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .payment-icon {
+            font-size: 2rem;
+            color: white;
+            z-index: 1;
+            position: relative;
+        }
+
+        .payment-badge {
+            background: var(--success-gradient);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(56, 239, 125, 0.3);
+            animation: badgePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .payment-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            letter-spacing: -0.01em;
+        }
+
+        .payment-info {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-theme="light"] .payment-info {
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+        }
+
+        .payment-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+
+        .payment-number {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+            word-spacing: 6px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        [data-theme="light"] .payment-number {
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .payment-name::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: var(--success-gradient);
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 0 10px rgba(56, 239, 125, 0.5);
+        }
+
+        .copy-btn {
+            width: 100%;
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            padding: 18px 28px;
+            border-radius: 15px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .copy-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(79, 172, 254, 0.6);
+        }
+
+        .copy-btn:hover::before {
+            left: 100%;
+        }
+
+        .copy-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .copy-btn.success {
+            background: var(--success-gradient);
+            box-shadow: 0 6px 20px rgba(56, 239, 125, 0.4);
+        }
+
+        .copy-btn.success:hover {
+            box-shadow: 0 12px 35px rgba(56, 239, 125, 0.6);
+        }
+
+        .notification {
+            position: fixed;
+            top: 32px;
+            right: 32px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 24px 32px;
+            border-radius: 18px;
+            box-shadow: var(--shadow-heavy);
+            transform: translateX(400px);
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-weight: 600;
+            min-width: 320px;
+            max-width: 400px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            border-left: 4px solid #38ef7d;
+            box-shadow: var(--shadow-heavy), 0 0 30px rgba(56, 239, 125, 0.3);
+        }
+
+        .notification.error {
+            border-left: 4px solid #ff6b6b;
+            box-shadow: var(--shadow-heavy), 0 0 30px rgba(255, 107, 107, 0.3);
+        }
+
+        .notification i {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .notification.success i {
+            color: #38ef7d;
+        }
+
+        .notification.error i {
+            color: #ff6b6b;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 80px;
+            padding: 50px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 2s ease-out;
+        }
+
+        [data-theme="light"] .footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--accent-gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
+        }
+
+        .social-link:hover::before {
+            opacity: 1;
+        }
+
+        .social-link i {
+            position: relative;
+            z-index: 1;
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover i {
+            color: white;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                padding: 32px 16px;
+            }
+            
+            .payment-grid {
+                gap: 24px;
+            }
+
+            .qris-image {
+                width: 240px;
+                height: 240px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .payment-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .payment-card {
+                padding: 32px 24px;
+            }
+            
+            .qris-image {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .notification {
+                right: 16px;
+                top: 16px;
+                min-width: 280px;
+                max-width: calc(100vw - 32px);
+            }
+
+            .theme-toggle {
+                top: 16px;
+                right: 16px;
+                padding: 6px 12px;
+            }
+
+            .theme-toggle span {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 24px 12px;
+            }
+            
+            .payment-card {
+                padding: 24px 20px;
+            }
+            
+            .payment-icon-wrapper {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .payment-icon {
+                font-size: 1.5rem;
+            }
+            
+            .qris-image {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .footer-social {
+                gap: 15px;
+            }
+
+            .social-link {
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-sun" id="theme-icon"></i>
+        <span id="theme-text">Light Mode</span>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <i class="fas fa-gem"></i>
+            </div>
+            <h1>FAUZARD PAYMENT</h1>
+            <p class="subtitle">Payment Method</p>
+            <p class="description">Sistem pembayaran terdepan dengan teknologi keamanan tingkat enterprise dan pengalaman pengguna yang luar biasa</p>
+        </header>
+
+        <main class="payment-grid">
+            <article class="payment-card">
+                <div class="payment-header">
+                    <div class="payment-icon-wrapper">
+                        <i class="payment-icon fab fa-cc-apple-pay"></i>
+                    </div>
+                    <div class="payment-badge">Popular</div>
+                </div>
+                <h2 class="payment-title">DANA</h2>
+                <div class="payment-info">
+                    <div class="payment-label">Nomor Rekening</div>
+                    <div class="payment-number" id="dana-number">0881 0110 35797</div>
+                    <div class="payment-name">A/N: Ses****</div>
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard('0881011035797', 'DANA', this)">
+                    <i class="fas fa-copy"></i> Salin Nomor
+                </button>
+            </article>
+
+            <article class="payment-card">
+                <div class="payment-header">
+                    <div class="payment-icon-wrapper">
+                        <i class="payment-icon fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="payment-badge">Instant</div>
+                </div>
+                <h2 class="payment-title">GOPAY</h2>
+                <div class="payment-info">
+                    <div class="payment-label">Nomor Rekening</div>
+                    <div class="payment-number" id="gopay-number">0881 0110 35797</div>
+                    <div class="payment-name">A/N: RAFA AKBAR</div>
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard('0881011035797', 'GOPAY', this)">
+                    <i class="fas fa-copy"></i> Salin Nomor
+                </button>
+            </article>
+
+            <article class="payment-card">
+                <div class="payment-header">
+                    <div class="payment-icon-wrapper">
+                        <i class="payment-icon fas fa-university"></i>
+                    </div>
+                    <div class="payment-badge">Secure</div>
+                </div>
+                <h2 class="payment-title">SEABANK</h2>
+                <div class="payment-info">
+                    <div class="payment-label">Nomor Rekening</div>
+                    <div class="payment-number" id="seabank-number">9015 6538 3892</div>
+                    <div class="payment-name">A/N: SESNITA</div>
+                </div>
+                <button class="copy-btn" onclick="copyToClipboard('901565383892', 'SEABANK', this)">
+                    <i class="fas fa-copy"></i> Salin Nomor
+                </button>
+            </article>
+
+            <article class="payment-card qris-card">
+                <div class="payment-header">
+                    <div class="payment-icon-wrapper">
+                        <i class="payment-icon fas fa-qrcode"></i>
+                    </div>
+                    <div class="payment-badge">QR Scan</div>
+                </div>
+                <h2 class="payment-title">QRIS</h2>
+                <div class="qris-container">
+                    <div class="qris-wrapper">
+                        <div class="qris-image">
+                            <img src="https://files.catbox.moe/580p00.jpg" alt="QRIS Code Warung Fauzard" loading="lazy">
+                            <div class="qris-scan-line"></div>
+                            <div class="qris-particles">
+                                <div class="particle"></div>
+                                <div class="particle"></div>
+                                <div class="particle"></div>
+                                <div class="particle"></div>
+                            </div>
+                        </div>
+                        <div class="qris-overlay">Scan QR</div>
+                    </div>
+                </div>
+                <div class="payment-info">
+                    <div class="payment-label">A/N</div>
+                    <div class="payment-name">WARUNG FAUZARD</div>
+                </div>
+                <button class="copy-btn" onclick="downloadQRIS(this)">
+                    <i class="fas fa-download"></i> Unduh QR Code
+                </button>
+            </article>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">FAUZARD</div>
+                <p class="footer-text">© 2025 Fauzard Payment Method System.</p>
+                <div class="footer-social">
+                    <a href="https://t.me/fauzardback" class="social-link" aria-label="Telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationText">Berhasil disalin!</span>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                themeIcon.className = 'fas fa-moon';
+                themeText.textContent = 'Dark Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-sun';
+                themeText.textContent = 'Light Mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            
+            if (savedTheme === 'light') {
+                document.body.setAttribute('data-theme', 'light');
+                themeIcon.className = 'fas fa-moon';
+                themeText.textContent = 'Dark Mode';
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-sun';
+                themeText.textContent = 'Light Mode';
+            }
+        }
+
+        async function copyToClipboard(text, method, buttonElement) {
+            try {
+                await navigator.clipboard.writeText(text);
+                showNotification(`Nomor ${method} berhasil disalin ke clipboard!`, 'success');
+                
+                const originalContent = buttonElement.innerHTML;
+                const originalClass = buttonElement.className;
+                
+                buttonElement.className = 'copy-btn success';
+                buttonElement.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+                buttonElement.style.transform = 'scale(0.95)';
+                
+                const numberId = method.toLowerCase() + '-number';
+                const numberElement = document.getElementById(numberId);
+                if (numberElement) {
+                    numberElement.style.color = '#38ef7d';
+                    numberElement.style.textShadow = '0 0 15px rgba(56, 239, 125, 0.6)';
+                    numberElement.style.transform = 'scale(1.05)';
+                    
+                    setTimeout(() => {
+                        numberElement.style.color = '';
+                        numberElement.style.textShadow = '';
+                        numberElement.style.transform = '';
+                    }, 2000);
+                }
+                
+                setTimeout(() => {
+                    buttonElement.className = originalClass;
+                    buttonElement.innerHTML = originalContent;
+                    buttonElement.style.transform = 'scale(1)';
+                }, 3000);
+                
+            } catch (err) {
+                try {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = text;
+                    textArea.style.position = 'fixed';
+                    textArea.style.left = '-999999px';
+                    textArea.style.top = '-999999px';
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    
+                    const successful = document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    
+                    if (successful) {
+                        showNotification(`Nomor ${method} berhasil disalin!`, 'success');
+                    } else {
+                        throw new Error('Fallback copy failed');
+                    }
+                } catch (fallbackErr) {
+                    showNotification('Gagal menyalin. Silakan salin manual: ' + text, 'error');
+                }
+            }
+        }
+
+        async function downloadQRIS(buttonElement) {
+            try {
+                const originalContent = buttonElement.innerHTML;
+                const originalClass = buttonElement.className;
+                
+                buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengunduh...';
+                buttonElement.disabled = true;
+                
+                const link = document.createElement('a');
+                link.href = 'https://files.catbox.moe/580p00.jpg';
+                link.download = 'QRIS_Warung_Fauzard_Premium.jpg';
+                link.style.display = 'none';
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showNotification('QR Code berhasil diunduh ke perangkat Anda!', 'success');
+                
+                buttonElement.className = 'copy-btn success';
+                buttonElement.innerHTML = '<i class="fas fa-check"></i> Berhasil Diunduh!';
+                buttonElement.disabled = false;
+                
+                setTimeout(() => {
+                    buttonElement.className = originalClass;
+                    buttonElement.innerHTML = originalContent;
+                }, 3000);
+                
+            } catch (error) {
+                showNotification('Gagal mengunduh QR Code. Silakan coba lagi.', 'error');
+                
+                buttonElement.innerHTML = '<i class="fas fa-download"></i> Unduh QR Code';
+                buttonElement.disabled = false;
+            }
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            const icon = notification.querySelector('i');
+            
+            if (window.notificationTimeout) {
+                clearTimeout(window.notificationTimeout);
+            }
+            
+            notificationText.textContent = message;
+            
+            notification.className = `notification ${type}`;
+            
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+            } else if (type === 'error') {
+                icon.className = 'fas fa-exclamation-circle';
+            }
+            
+            notification.classList.add('show');
+            
+            window.notificationTimeout = setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+            
+            button.appendChild(ripple);
+            
+            setTimeout(() => {
+                if (ripple.parentNode) {
+                    ripple.remove();
+                }
+            }, 600);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+            
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', createRipple);
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.getElementById('notification').classList.remove('show');
+                }
+            });
+
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('focus', function() {
+                    this.style.outline = '3px solid rgba(79, 172, 254, 0.6)';
+                    this.style.outlineOffset = '2px';
+                });
+                
+                button.addEventListener('blur', function() {
+                    this.style.outline = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
